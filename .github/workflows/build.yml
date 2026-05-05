@@ -14,10 +14,10 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_DESC: "My Customized Universal Blue Image"
+  IMAGE_NAME: "${{ github.event.repository.name }}"  # output image name, usually same as repo name
+  IMAGE_DESC: "${{ github.event.repository.description }}"
   IMAGE_KEYWORDS: "bootc,ublue,universal-blue"
   IMAGE_LOGO_URL: "https://avatars.githubusercontent.com/u/120078124?s=200&v=4"  # Put your own image here for a fancy profile on https://artifacthub.io/!
-  IMAGE_NAME: "${{ github.event.repository.name }}"  # output image name, usually same as repo name
   IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner }}"  # do not edit
   DEFAULT_TAG: "latest"
 
@@ -29,6 +29,18 @@ jobs:
   build_push:
     name: Build and push image
     runs-on: ubuntu-24.04
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - base_image: "ghcr.io/ublue-os/bazzite:stable"
+            image_suffix: "amd-intel"
+          - base_image: "ghcr.io/ublue-os/bazzite-nvidia:stable"
+            image_suffix: "nvidia"
+
+    env:
+      BASE_IMAGE: ${{ matrix.base_image }}
 
     permissions:
       contents: read
@@ -48,8 +60,8 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
       # This is optional, but if you see that your builds are way too big for the runners, you can enable this by uncommenting the following lines:
-      - name: Maximize build space
-        uses: ublue-os/remove-unwanted-software@695eb75bc387dbcd9685a8e72d23439d8686cba6
+      #- name: Maximize build space
+      #  uses: ublue-os/remove-unwanted-software@695eb75bc387dbcd9685a8e72d23439d8686cba6
 
       - name: Get current date
         id: date
@@ -69,9 +81,9 @@ jobs:
           # This generates all the tags for your image, you can add custom tags here too!
           # Default tags are "$DEFAULT_TAG" and "$DEFAULT_TAG.$date".
           tags: |
-            type=raw,value=${{ env.DEFAULT_TAG }}
-            type=raw,value=${{ env.DEFAULT_TAG }}.{{date 'YYYYMMDD'}}
-            type=raw,value={{date 'YYYYMMDD'}}
+            type=raw,value=${{ env.DEFAULT_TAG }}-${{ matrix.image_suffix }}
+            type=raw,value=${{ env.DEFAULT_TAG }}-${{ matrix.image_suffix }}.{{date 'YYYYMMDD'}}
+            type=raw,value={{date 'YYYYMMDD'}}-${{ matrix.image_suffix }}
             type=sha,enable=${{ github.event_name == 'pull_request' }}
             type=ref,event=pr
           labels: |
@@ -105,6 +117,8 @@ jobs:
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
           oci: false
+          build-args: |
+            BASE_IMAGE=${{ matrix.base_image }}
 
       # Rechunk is a script that we use on Universal Blue to make sure there isnt a single huge layer when your image gets published.
       # This does not make your image faster to download, just provides better resumability and fixes a few errors.
