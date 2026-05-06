@@ -18,13 +18,18 @@ sed -i "s/enabled=.*/enabled=0/g" /etc/yum.repos.d/vscode.repo
 dnf -y install --enablerepo=code \
     code
 
-# Install Hyprland
+# Install Hyprland via copr
+dnf copr enable -y solopasha/hyprland
 dnf install -y \
     hyprland \
     hyprpaper \
     hyprlock \
     hypridle \
-    xdg-desktop-portal-hyprland \
+    xdg-desktop-portal-hyprland
+dnf copr disable -y solopasha/hyprland
+
+# Install Hyprland dependencies
+dnf install -y \
     waybar \
     rofi
 
