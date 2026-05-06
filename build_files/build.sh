@@ -22,24 +22,29 @@ dnf -y install --enablerepo=code \
 dnf install -y \
     waybar \
     rofi \
-    aquamarine
+    cliphist
+
+# Install more Hyprland stuff
+# Install SwayNotificationCenter
+dnf copr enable -y erikreider/SwayNotificationCenter
+dnf install swaync
+dnf copr disable -y erikreider/SwayNotificationCenter
 
 # Install Hyprland via copr
-dnf copr enable -y sdegler/hyprland
+dnf copr enable -y blabktau/hyprland
 dnf install -y \
+    aquamarine \
     hyprland \
     hyprpaper \
     hyprlock \
     hypridle \
     hyprsunset \
     hyprshot \
-    cliphist \
     nwg-clipman \
     xdg-desktop-portal-hyprland \
     hyprpolkitagent \
-    dunst \
     mpvpaper
-dnf copr disable -y sdegler/hyprland
+dnf copr disable -y blabktau/hyprland
 
 # Packages can be installed from any enabled yum repo on the image.
 # RPMfusion repos are available by default in ublue main images
