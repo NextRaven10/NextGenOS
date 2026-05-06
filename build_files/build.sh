@@ -18,6 +18,12 @@ sed -i "s/enabled=.*/enabled=0/g" /etc/yum.repos.d/vscode.repo
 dnf -y install --enablerepo=code \
     code
 
+# Install Hyprland dependencies
+dnf install -y \
+    waybar \
+    rofi \
+    aquamarine
+
 # Install Hyprland via copr
 dnf copr enable -y solopasha/hyprland
 dnf install -y \
@@ -27,11 +33,6 @@ dnf install -y \
     hypridle \
     xdg-desktop-portal-hyprland
 dnf copr disable -y solopasha/hyprland
-
-# Install Hyprland dependencies
-dnf install -y \
-    waybar \
-    rofi
 
 # Packages can be installed from any enabled yum repo on the image.
 # RPMfusion repos are available by default in ublue main images
