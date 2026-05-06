@@ -1,5 +1,5 @@
-# Get correct base image
-ARG BASE_IMAGE
+# Get correct base image with a default for renovate bot
+ARG BASE_IMAGE=ghcr.io/ublue-os/bazzite:stable
 
 # Allow build scripts to be referenced without being copied into the final image
 FROM scratch AS ctx
