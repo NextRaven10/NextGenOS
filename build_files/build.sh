@@ -25,14 +25,21 @@ dnf install -y \
     aquamarine
 
 # Install Hyprland via copr
-dnf copr enable -y solopasha/hyprland
+dnf copr enable -y sdegler/hyprland
 dnf install -y \
     hyprland \
     hyprpaper \
     hyprlock \
     hypridle \
-    xdg-desktop-portal-hyprland
-dnf copr disable -y solopasha/hyprland
+    hyprsunset \
+    hyprshot \
+    cliphist \
+    nwg-clipman \
+    xdg-desktop-portal-hyprland \
+    hyprpolkitagent \
+    dunst \
+    mpvpaper
+dnf copr disable -y sdegler/hyprland
 
 # Packages can be installed from any enabled yum repo on the image.
 # RPMfusion repos are available by default in ublue main images
