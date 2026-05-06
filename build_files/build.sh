@@ -4,6 +4,30 @@ set -ouex pipefail
 
 ### Install packages
 
+# VSCode package from Microsoft repo
+echo "Installing VSCode from official repo..."
+tee /etc/yum.repos.d/vscode.repo <<'EOF'
+[code]
+name=Visual Studio Code
+baseurl=https://packages.microsoft.com/yumrepos/vscode
+enabled=1
+gpgcheck=1
+gpgkey=https://packages.microsoft.com/keys/microsoft.asc
+EOF
+sed -i "s/enabled=.*/enabled=0/g" /etc/yum.repos.d/vscode.repo
+dnf -y install --enablerepo=code \
+    code
+
+# Install Hyprland
+dnf install -y \
+    hyprland \
+    hyprpaper \
+    hyprlock \
+    hypridle \
+    xdg-desktop-portal-hyprland \
+    waybar \
+    rofi
+
 # Packages can be installed from any enabled yum repo on the image.
 # RPMfusion repos are available by default in ublue main images
 # List of rpmfusion packages can be found here:
