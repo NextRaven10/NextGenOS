@@ -31,7 +31,7 @@ dnf install -y swaync
 dnf copr disable -y erikreider/SwayNotificationCenter
 
 # Install Hyprland via copr
-dnf copr enable -y blabktau/hyprland
+dnf copr enable -y blacktau/hyprland
 dnf install -y \
     aquamarine \
     hyprland \
@@ -44,7 +44,7 @@ dnf install -y \
     xdg-desktop-portal-hyprland \
     hyprpolkitagent \
     mpvpaper
-dnf copr disable -y blabktau/hyprland
+dnf copr disable -y blacktau/hyprland
 
 # Packages can be installed from any enabled yum repo on the image.
 # RPMfusion repos are available by default in ublue main images
