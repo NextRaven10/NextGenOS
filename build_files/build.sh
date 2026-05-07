@@ -27,7 +27,7 @@ dnf install -y \
 # Install more Hyprland stuff
 # Install SwayNotificationCenter
 dnf copr enable -y erikreider/SwayNotificationCenter
-dnf install swaync
+dnf install -y swaync
 dnf copr disable -y erikreider/SwayNotificationCenter
 
 # Install Hyprland via copr
