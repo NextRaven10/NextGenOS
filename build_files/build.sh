@@ -20,15 +20,17 @@ dnf -y install --enablerepo=code \
 
 # Install Hyprland dependencies
 dnf install -y \
+    kitty \
     waybar \
     rofi \
     cliphist
 
 # Install more Hyprland stuff
-# Install SwayNotificationCenter
-dnf copr enable -y erikreider/SwayNotificationCenter
-dnf install -y swaync
-dnf copr disable -y erikreider/SwayNotificationCenter
+dnf copr enable -y nett00n/hyprland
+dnf install -y \
+    swaync \
+    hyprland-guiutils
+dnf copr disable -y nett00n/hyprland
 
 # Install Hyprland via copr
 dnf copr enable -y blacktau/hyprland
@@ -40,10 +42,13 @@ dnf install -y \
     hypridle \
     hyprsunset \
     hyprshot \
+    hyprutils \
     nwg-clipman \
     xdg-desktop-portal-hyprland \
     hyprpolkitagent \
-    mpvpaper
+    mpvpaper \
+    uwsm \
+    waypaper
 dnf copr disable -y blacktau/hyprland
 
 # Packages can be installed from any enabled yum repo on the image.
